@@ -6,7 +6,7 @@ import { SidebarTrigger } from "./ui/sidebar";
 const Navbar = () => {
   return (
     <div
-      className="flex justify-between max-w-full w-full  py-2 border-b border-solid border-gray-200 sticky z-10 top-0 
+      className="flex justify-between max-w-full w-full  py-1 border-b border-solid border-gray-200 sticky z-10 top-0 
      backdrop-blur-lg "
     >
       <SidebarTrigger />

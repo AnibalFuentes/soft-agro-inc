@@ -1,4 +1,3 @@
-"use client";
 // import fileToBase64 from "@/actions/convert-file-to-base64";
 // import { setInLocalstorage } from "@/actions/set-in-localstorage";
 import { Button } from "@/components/ui/button";
@@ -11,13 +10,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { signout } from "@/lib/auth-actions";
 // import { useUser } from "@/hooks/use-user";
-import {
-  //   getDocument,
-  signOutAccount,
-  //   updateDocument,
-  //   uploadBase64,
-} from "@/lib/firebase";
+import //   getDocument,
+// signOutAccount,
+//   updateDocument,
+//   uploadBase64,
+"@/lib/firebase";
+import { createClient } from "@/utils/supabase/server";
 import {
   CircleUserRound,
   FileText,
@@ -37,7 +37,13 @@ import {
 //   return str.replace(/\b\w/g, (char) => char.toUpperCase());
 // };
 
-export function ProfileDropdown() {
+export async function ProfileDropdown() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   //   const { user } = useUser();
   //   const [image, setImage] = useState<string>("");
   //   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -100,7 +106,7 @@ export function ProfileDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="">
+        <Button variant="ghost" className="">
           <span className="mr-2">Cuenta</span>
 
           {/* {image ? (
@@ -153,7 +159,7 @@ export function ProfileDropdown() {
             </>
           )} */}
 
-          {/* <div>{user?.name ? capitalizeWords(user.name) : ""}</div> */}
+          <div>{user?.email}</div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
@@ -172,7 +178,7 @@ export function ProfileDropdown() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOutAccount()}>
+        <DropdownMenuItem onClick={signout}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Cerrar Sesión</span>
         </DropdownMenuItem>
